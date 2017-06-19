@@ -1,0 +1,182 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+  <title>VueJS Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> 
+  <meta name="description" content="VUE JS Demo">
+  <meta name="author" content="beginningProgrammer.com">
+
+  <link rel="stylesheet" href="css/gridiculous.css?v=1">
+  <script src="js/vue.js"></script>
+
+  <style>
+    .student-record:hover{
+        background-color:#5588FF;
+    }
+
+    .table-header{
+        font-weight: bold;
+        background-color: #BBBBBB;
+    }
+
+    button{
+        background-color: #AABBEE;
+    }
+  </style>
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div id="site-container" class="grid">
+  <header class="row">
+    <h1 class="c12">VUE JS with Gridiculous Sample Page</h1>
+  </header>
+
+
+  <div id="site-content" role="main">
+	
+        <div class="row table-header">
+            <div class="c1">ID</div>
+            <div class="c3">First Name</div>
+            <div class="c3">Last Name</div>
+            <div class="c3 end">Grade</div>
+        </div>
+        
+        <div class="row student-record" v-for="stu in students" v-on:click="onChangeCurrent(stu, $event)">
+            <div class="c1">{{stu.ID}}</div>
+            <div class="c3">{{stu.firstName}}</div>
+            <div class="c3">{{stu.lastName}}</div>
+            <div class="c3 end">{{stu.grade}}</div>
+        </div>
+
+        <div class="row student-details">
+            <ul >
+                <li>ID:          {{current.ID}}</li>
+                <li>First Name:  {{current.firstName}}</li>
+                <li>Last Name:   {{current.lastName}}</li>
+                <li>Grade:       {{current.grade}}</li>
+                <li>GPA:         {{current.gpa}}</li>
+                <li>Phone:       {{current.phone}}</li>
+            </ul>
+            <button v-on:click="deleteStudent(current, $event)">Delete</button>    
+        </div>
+
+  		<footer class="row">
+	
+			<div class="c3">footer col 1</div>
+			<div class="c3">footer col 2</div>
+			<div class="c3">footer col 3</div>
+			<div class="c3 end">footer col 4</div>
+	
+		</footer>
+  </div>
+
+ <script>
+ 
+    var students = [
+        {
+            ID: "0001",
+            firstName: "AJoe",
+            lastName: "Smith",
+            grade: "Sophmore",
+            gpa: 3.5,
+            phone: '333-222-1111'
+        },
+            {
+                ID: "0002",
+                firstName: "AMary",
+                lastName: "Smith",
+                grade: "Freshman",
+            gpa: 3.5,
+            phone: '333-555-1111'
+            },
+            {
+                ID: "0003",
+                firstName: "AAnne",
+                lastName: "Williams",
+                grade: "Senior",
+            gpa: 3.5,
+            phone: '333-777-1111'
+            },
+            
+        ];
+    var app = new Vue({
+        el: '#site-content',
+        data: {
+            students: [],
+            current: {}
+        },
+        methods: {
+            onChangeCurrent: function(stu, event){
+                this.current = stu;
+            },
+
+            deleteStudent: function(stu, event){
+                for(var i=0;i<this.students.length; i++){
+                    if(stu.ID === this.students[i].ID){
+                        this.students.splice(i, 1);
+
+                        if(this.students.length > 0){
+                            this.current = this.students[0];
+                        }
+                        else{
+                            this.current = {ID: '', firstName: '', lastName: ''};
+                        }     
+                        break;
+                    }
+                }
+            }
+        }
+    })
+
+    function loadData(){
+        //pretend ajax call
+           var students = [
+                {
+                    ID: "0005",
+                    firstName: "Joe",
+                    lastName: "Smith",
+                    grade: "Sophmore",
+                    gpa: 3.5,
+                    phone: '333-222-1111'
+                },
+                    {
+                        ID: "0006",
+                        firstName: "Mary",
+                        lastName: "Smith",
+                        grade: "Freshman",
+                    gpa: 3.5,
+                    phone: '333-555-1111'
+                    },
+                    {
+                        ID: "0007",
+                        firstName: "Anne",
+                        lastName: "Williams",
+                        grade: "Senior",
+                    gpa: 3.5,
+                    phone: '333-777-1111'
+                    },
+                    
+                ];
+
+        app.students = students;
+    }
+
+    loadData();
+
+ </script>
+
+</body>
+</html>
